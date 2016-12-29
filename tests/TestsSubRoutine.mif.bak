@@ -1,0 +1,41 @@
+Depth = 256;
+Width = 8;
+Address_radix = hex;
+Data_radix = hex;
+% Program RAM Data %
+Content
+  Begin
+
+0000 : 89; % LDSI
+0001 : 40;
+0002 : 00;
+0003 : C8; % CALL
+0004 : 0B;
+0005 : 00;
+0006 : F9; % CLRC
+0007 : B0; % BCCA
+0008 : 06;
+0009 : 00;
+000A : 00;
+000B : 88; % LDAA
+000C : 1C;
+000D : 00;
+000E : F1; % STARD
+000F : 88; % LDAA
+0010 : 1D; 
+0011 : 00;
+0012 : 21; % ANDR
+0013 : B2; % BEQA
+0014 : 17;
+0015 : 00;
+0016 : 01;
+0017 : 01;
+0018 : F6;
+0019 : FE;
+001A : FF;
+001B : C0; %RET
+001C : 55;
+001D : AA;
+[001E..00FF] : 00;
+End;
+

@@ -1,0 +1,29 @@
+Depth = 256;
+Width = 8;
+Address_radix = hex;
+Data_radix = hex;
+% Program RAM Data %
+Content
+  Begin
+0000 : 88; 	%	LDAA	IMPORT0%
+0001 : FE;	
+0002 : FF;
+0003 : F1;	%	STAR D	%
+0004 : 88; 	%	LDAA	IMPORT1%
+0005 : FF;	
+0006 : FF;
+0007 : FF;	%	MULT	%
+0008 : F6;	%   	STAA	OUTPORT1 %
+0009 : FE;	
+000A : FF;			
+000B : 81;	%	LDAD	%
+000C : F6;	%   	STAA	OUTPORT0 %
+000D : FF;	
+000E : FF;
+000F : F9;	%	CLRC		%
+0010 : B0;	%	BCCA	INFI_LOOP%
+0011 : 0F;
+0012 : 00;
+[0013..00FF] : 00;
+End;
+

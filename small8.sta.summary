@@ -1,0 +1,149 @@
+------------------------------------------------------------
+TimeQuest Timing Analyzer Summary
+------------------------------------------------------------
+
+Type  : Slow 1200mV 85C Model Setup 'clk'
+Slack : -16.590
+TNS   : -1596.944
+
+Type  : Slow 1200mV 85C Model Setup 'CPU:U_cpu|controller:U_controller|state.ADDR_13'
+Slack : -3.102
+TNS   : -23.783
+
+Type  : Slow 1200mV 85C Model Setup 'CPU:U_cpu|controller:U_controller|state.ADCR_D'
+Slack : 0.063
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Setup 'CPU:U_cpu|controller:U_controller|state.CLRC'
+Slack : 0.125
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'CPU:U_cpu|controller:U_controller|state.ADCR_D'
+Slack : -3.629
+TNS   : -13.360
+
+Type  : Slow 1200mV 85C Model Hold 'CPU:U_cpu|controller:U_controller|state.ADDR_13'
+Slack : -1.492
+TNS   : -9.823
+
+Type  : Slow 1200mV 85C Model Hold 'clk'
+Slack : -0.816
+TNS   : -4.596
+
+Type  : Slow 1200mV 85C Model Hold 'CPU:U_cpu|controller:U_controller|state.CLRC'
+Slack : -0.659
+TNS   : -1.303
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'clk'
+Slack : -3.000
+TNS   : -303.522
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'CPU:U_cpu|controller:U_controller|state.CLRC'
+Slack : 0.404
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'CPU:U_cpu|controller:U_controller|state.ADDR_13'
+Slack : 0.414
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'CPU:U_cpu|controller:U_controller|state.ADCR_D'
+Slack : 0.425
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Setup 'clk'
+Slack : -14.691
+TNS   : -1408.970
+
+Type  : Slow 1200mV 0C Model Setup 'CPU:U_cpu|controller:U_controller|state.ADDR_13'
+Slack : -2.722
+TNS   : -20.966
+
+Type  : Slow 1200mV 0C Model Setup 'CPU:U_cpu|controller:U_controller|state.ADCR_D'
+Slack : -0.002
+TNS   : -0.002
+
+Type  : Slow 1200mV 0C Model Setup 'CPU:U_cpu|controller:U_controller|state.CLRC'
+Slack : 0.061
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'CPU:U_cpu|controller:U_controller|state.ADCR_D'
+Slack : -3.232
+TNS   : -10.883
+
+Type  : Slow 1200mV 0C Model Hold 'CPU:U_cpu|controller:U_controller|state.ADDR_13'
+Slack : -1.301
+TNS   : -8.414
+
+Type  : Slow 1200mV 0C Model Hold 'clk'
+Slack : -0.757
+TNS   : -4.344
+
+Type  : Slow 1200mV 0C Model Hold 'CPU:U_cpu|controller:U_controller|state.CLRC'
+Slack : -0.600
+TNS   : -1.190
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'clk'
+Slack : -3.000
+TNS   : -303.522
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'CPU:U_cpu|controller:U_controller|state.ADCR_D'
+Slack : 0.435
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'CPU:U_cpu|controller:U_controller|state.ADDR_13'
+Slack : 0.440
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'CPU:U_cpu|controller:U_controller|state.CLRC'
+Slack : 0.442
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Setup 'clk'
+Slack : -9.179
+TNS   : -844.264
+
+Type  : Fast 1200mV 0C Model Setup 'CPU:U_cpu|controller:U_controller|state.ADDR_13'
+Slack : -1.366
+TNS   : -10.096
+
+Type  : Fast 1200mV 0C Model Setup 'CPU:U_cpu|controller:U_controller|state.ADCR_D'
+Slack : 0.284
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Setup 'CPU:U_cpu|controller:U_controller|state.CLRC'
+Slack : 0.329
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'CPU:U_cpu|controller:U_controller|state.ADCR_D'
+Slack : -2.159
+TNS   : -6.693
+
+Type  : Fast 1200mV 0C Model Hold 'CPU:U_cpu|controller:U_controller|state.ADDR_13'
+Slack : -0.926
+TNS   : -6.313
+
+Type  : Fast 1200mV 0C Model Hold 'clk'
+Slack : -0.539
+TNS   : -3.796
+
+Type  : Fast 1200mV 0C Model Hold 'CPU:U_cpu|controller:U_controller|state.CLRC'
+Slack : -0.237
+TNS   : -0.463
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'clk'
+Slack : -3.000
+TNS   : -313.722
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'CPU:U_cpu|controller:U_controller|state.ADDR_13'
+Slack : 0.400
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'CPU:U_cpu|controller:U_controller|state.CLRC'
+Slack : 0.412
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'CPU:U_cpu|controller:U_controller|state.ADCR_D'
+Slack : 0.424
+TNS   : 0.000
+
+------------------------------------------------------------

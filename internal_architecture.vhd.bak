@@ -1,0 +1,288 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+entity  internal_architecture is 
+	generic (
+	width : positive:=8);
+	port (
+			controller_input: in std_logic_vector(3 downto 0);
+			external_Bus_input: in std_logic_vector(width-1 downto 0);
+			clk, rst: in std_logic;
+			outPut_Bus : out std_logic_vector(width-1 downto 0);
+			External_Adress_Bus : out std_logic_vector(2*width-1 downto 0);
+			C,V,S,Z: out std_logic;
+			Status_reg_en,PCL_en,PCH_en: in std_logic;
+			pc_inc_sel,MuxToPcL_sel,MuxToPcH_sel,address_sel : in std_logic_vector(1 downto 0);
+			A_en,PC_en,IR_en, AR_en, SP_en, X_en, Alu_reg_en, PC_ld,D_en: in std_logic;
+			wen: in std_logic_vector(9 downto 0);
+			 IR_reg_outPut : out std_logic_vector(width-1 downto 0)
+			
+	
+	);
+end 	internal_architecture;
+architecture str of internal_architecture is 
+
+signal alu_input : std_logic_vector(width-1 downto 0);
+signal A_reg_input : std_logic_vector(width-1 downto 0);
+signal D_reg_input : std_logic_vector(width-1 downto 0);
+signal PCL_reg_input : std_logic_vector(width-1 downto 0);
+signal PCH_reg_input : std_logic_vector(width-1 downto 0);
+signal xl_reg_input : std_logic_vector(width-1 downto 0);
+signal xh_reg_input : std_logic_vector(width-1 downto 0);
+signal spl_reg_input : std_logic_vector(width-1 downto 0);
+signal sph_reg_input : std_logic_vector(width-1 downto 0);
+
+signal alu_outPut,alu_Reg_outPut : std_logic_vector(width-1 downto 0);
+signal A_reg_outPut,mux123_output,pcl_adder_output,adder_pcl_output,pch_adder_output,adder_pch_output,Mux_exAdrr_ARH,
+		Mux_exAdrr_ARL
+		: std_logic_vector(width-1 downto 0);
+
+signal D_reg_outPut : std_logic_vector(width-1 downto 0);
+signal PCL_reg_outPut : std_logic_vector(7 downto 0);
+signal PCH_reg_outPut : std_logic_vector(7 downto 0);
+signal xl_reg_outPut: std_logic_vector(width-1 downto 0);
+signal xh_reg_outPut : std_logic_vector(width-1 downto 0);
+signal spl_reg_outPut : std_logic_vector(width-1 downto 0);
+signal sph_reg_outPut : std_logic_vector(width-1 downto 0);
+signal IR_reg_outPut_sig : std_logic_vector(width-1 downto 0);
+signal ARL_reg_outPut : std_logic_vector(width-1 downto 0);
+signal ARH_reg_outPut : std_logic_vector(width-1 downto 0);
+signal internal_Bus_outPut_signal : std_logic_vector(width-1 downto 0);
+signal C_in_sig,c_out_sig,V_sig,S_sig,Z_sig,PCL_Max,
+		pcl_adder_cout:  std_logic;
+signal tem : std_logic_vector(width-1 downto 0);
+begin
+tem<=std_logic_vector(to_unsigned(0, 7)&pcl_adder_cout);
+U_ALU: entity work.ALU
+ generic map (
+	width => width)
+	port map(
+		input1=> A_reg_outPut,
+		input2=>internal_Bus_outPut_signal,
+		output=> alu_outPut,
+		signFlag=> s_sig,
+		zeroFlag=>z_sig,
+		OverFlowFlag=>v_sig,
+		carryFlag=> c_out_sig,
+		
+		
+		carryIn=>C_in_sig,
+		sel=>controller_input
+		
+	);
+c<= c_out_sig;
+U_ALU_REG : entity work.reg
+	generic map (width=>width)
+	port map(
+		input=> alu_outPut,
+		output=>ALU_reg_outPut,
+		load => ALu_reg_en,
+		rst=> rst,
+		clk => clk
+);
+	
+U_Status_REG : entity work.reg
+	generic map (width=>4)
+	port map(
+		input(3)=>z_sig,
+		input(2)=>s_sig,
+		input(1)=> v_sig,
+		input(0)=> c_out_sig,
+		output(3)=> z,
+		output(2)=> s,
+		output(1)=> v,
+		output(0)=> c_in_sig,
+		load => status_reg_en,
+		rst=> rst,
+		clk => clk
+);
+
+
+U_A_REG : entity work.reg
+	generic map (width=>width)
+	port map(
+		input=> internal_Bus_outPut_signal,
+		output=>A_reg_outPut,
+		load => A_en,
+		rst=> rst,
+		clk => clk
+);
+U_D_REG : entity work.reg
+	generic map (width=>width)
+	port map(
+		input=> internal_Bus_outPut_signal,
+		output=>D_reg_outPut,
+		load => D_en,
+		rst=> rst,
+		clk => clk
+);
+U_PCL : entity work.reg
+	generic map (width=>width)
+	port map(
+		input=> adder_pcl_output,
+		output=>PCL_reg_outPut,
+		load => PCL_en,
+		rst=> rst,
+		clk => clk
+		);
+		
+U_pcl_adder : entity work.adder
+	generic map (width=>width)
+	port map(
+		cin =>'0',
+		x=> PCL_reg_outPut,
+		y=>mux123_output,
+		s => pcl_adder_output,
+		cout=> pcl_adder_cout
+		
+		);
+U_Mux123 : entity work.mux
+	generic map (width=>width)
+	port map(
+		in1=>std_logic_vector(to_unsigned(1,width)),
+		in2=>std_logic_vector(to_unsigned(2,width)),
+		in3=>std_logic_vector(to_unsigned(3,width)),
+		in4=>std_logic_vector(to_unsigned(3,width)),
+		output=>mux123_output,
+		sel=> pc_inc_sel
+		);
+U_MuxToPcL : entity work.mux
+	generic map (width=>width)
+	port map(
+		in1=>internal_Bus_outPut_signal,
+		in2=>pcl_adder_output,
+		in3=>std_logic_vector(to_unsigned(0,width)),
+		in4=>std_logic_vector(to_unsigned(0,width)),
+		output=>adder_pcl_output,
+		sel=> MuxToPcL_sel
+		);
+
+
+U_MuxToPch : entity work.mux
+	generic map (width=>width)
+	port map(
+		in1=>internal_Bus_outPut_signal,
+		in2=>pch_adder_output,
+		in3=>std_logic_vector(to_unsigned(0,width)),
+		in4=>std_logic_vector(to_unsigned(0,width)),
+		output=>adder_pch_output,
+		sel=> MuxToPcH_sel
+		);
+U_PCH : entity work.reg
+	generic map (width=>width)
+	port map(
+		input=> adder_pch_output,
+		output=>PCH_reg_outPut,
+		load => PCH_en,
+		rst=> rst,
+		clk => clk
+		
+);
+U_pch_adder : entity work.adder
+	generic map (width=>8)
+	port map(
+		cin=>'0',
+		x=> PCh_reg_outPut,
+		y=>tem,
+		s => pch_adder_output
+		
+		
+		);
+U_IR_REG : entity work.reg
+	generic map (width=>width)
+	port map(
+		input=> internal_Bus_outPut_signal,
+		output=>IR_reg_outPut_sig,
+		load => IR_en,
+		rst=> rst,
+		clk => clk
+);
+U_ARH_REG : entity work.reg
+	generic map (width=>width)
+	port map(
+		input=> internal_Bus_outPut_signal,
+		output=>Mux_exAdrr_ARH,
+		load => AR_en,
+		rst=> rst,
+		clk => clk
+);
+U_ARL_REG : entity work.reg
+	generic map (width=>width)
+	port map(
+		input=> internal_Bus_outPut_signal,
+		output=>Mux_exAdrr_ARL,
+		load => AR_en,
+		rst=> rst,
+		clk => clk
+);
+
+U_MUX_adress_sel : entity work.mux
+	generic map (width=>16)
+	port map(
+		in1(15 downto 8)=>Mux_exAdrr_ARH,
+		in1(7downto 0)=>Mux_exAdrr_ARl,
+		in2(15 downto 8)=>PCH_reg_outPut,
+		in2(7 downto 0)=>PCL_reg_outPut,
+		in3=>std_logic_vector(to_unsigned(0,16)),
+		output=>External_Adress_Bus,
+		sel=>address_sel
+);
+
+U_XL_REG : entity work.reg
+	generic map (width=>width)
+	port map(
+		input=> internal_Bus_outPut_signal,
+		output=>XL_reg_outPut,
+		load => X_en,
+		rst=> rst,
+		clk => clk
+);
+U_XH_REG : entity work.reg
+	generic map (width=>width)
+	port map(
+		input=> internal_Bus_outPut_signal,
+		output=>XH_reg_outPut,
+		load => X_en,
+		rst=> rst,
+		clk => clk
+);
+
+U_SPH_REG : entity work.reg
+	generic map (width=>width)
+	port map(
+		input=> internal_Bus_outPut_signal,
+		output=>SPH_reg_outPut,
+		load => SP_en,
+		rst=> rst,
+		clk => clk
+);
+U_SPL_REG : entity work.reg
+	generic map (width=>width)
+	port map(
+		input=> internal_Bus_outPut_signal,
+		output=>SPL_reg_outPut,
+		load => SP_en,
+		rst=> rst,
+		clk => clk
+);
+
+U_INTERNAL_BUS : entity work.Bus_8source
+	generic map (width=>width)
+	port map(
+		input1=> alu_Reg_outPut,
+		input2=> A_reg_outPut,
+		input3=> D_reg_outPut,
+		input4=> PCL_reg_outPut,
+		input5=> PCH_reg_outPut,
+		input6=> SPL_reg_outPut,
+		input7=> SPH_reg_outPut,
+		input8=> XL_reg_outPut,
+		input9=> XH_reg_outPut,
+		input10=> external_Bus_input,
+		
+		outPut=>internal_Bus_outPut_signal,
+		wen=> wen
+);
+outPut_Bus<=internal_Bus_outPut_signal;
+IR_reg_outPut<=IR_reg_outPut_sig;
+end str;

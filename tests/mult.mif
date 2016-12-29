@@ -1,0 +1,100 @@
+Depth = 256;
+Width = 8;
+Address_radix = hex;
+Data_radix = hex;
+% Program RAM Data %
+Content
+  Begin
+0000 : 88; 	%	LDAA	IMPORT0%
+0001 : FE;	
+0002 : FF;
+0003 : F6;	%	STAA	IMPORT0%	
+0004 : 60;	
+0005 : 00;
+0006 : 88; 	%	LDAA	IMPORT1%
+0007 : FF;	
+0008 : FF;
+0009 : F6;	%	STAA	IMPORT1%	
+000A : 61;	
+000B : 00;
+000C : 84;	%   	LDAI 07 COUNT %
+000D : 07;	
+000E : F6;	%	STAA	COUNT	%	
+000F : 62;	
+0010 : 00;
+0011 : 84;	%   	LDAI 00 ZERO	%
+0012 : 00;	
+0013 : F6;	%	STAA	PROD	%	
+0014 : 63;	
+0015 : 00;
+0016 : 88; 	%	LDAA	MPR	%
+0017 : 60;	
+0018 : 00;
+0019 : F6;	%	STAA	PROD+1	%	
+001A : 64;	
+001B : 00;
+001C : 84;	% 	LDAI 	ONE 	%
+001D : 01;
+001E : F1;	%	STARD	D	%
+001F : 88;	%	LDAA	PROD+1	%
+0020 : 64;
+0021 : 00;
+0022 : 21;
+0023 : B2;	%	BEQA	BYPASS	%
+0024 : 31;
+0025 : 00;
+0026 : 88;	%	LDAA	MCAND	%
+0027 : 61;
+0028 : 00;	
+0029 : F1;	%	STAR	D	%
+002A : 88;	%	LDAA	PROD	%
+002B : 63;
+002C : 00;		
+002D : 01;	% 	ADCR		%
+002E : F6;	%	STAA	PROD	%
+002F : 63;
+0030 : 00;	
+0031 : 88;	%	LDAA	PROD	%
+0032 : 63;	
+0033 : 00;
+0034 : 62;	%	RORC		%	
+0035 : F6;	%	STAA	PROD	%
+0036 : 63;
+0037 : 00;
+0038 : 88;	%	LDAA	PROD+1	%
+0039 : 64;
+003A : 00;
+003B : 62;	%	RORC		%
+003C : F6;	%	STAA	PROD+1	%
+003D : 64;
+003E : 00;
+003F : F9;	%	CLRC		%
+0040 : 88;	%	LDAA	COUNT	%
+0041 : 62;
+0042 : 00;
+0043 : FB;	%	DECA		%
+0044 : F6;	%	STAA	COUNT	%
+0045 : 62;
+0046 : 00;
+0047 : B5;	%	BPLA TO BNEA	MULLOOP	%
+0048 : 1C;
+0049 : 00;
+004A : 88;	%	LDAA	PROD	%
+004B : 64;
+004C : 00;
+004D : F6;	%	STAA	OUTPOT0	%
+004E : FE;
+004F : FF;
+0050 : 88;	%	LDAA	PROD+1	%
+0051 : 63;
+0052 : 00;
+0053 : F6;	%	STAA 	OUTPORT1%
+0054 : FF;
+0055 : FF;
+0056 : F9;	%	CLRC		%
+0057 : B0;	%	BCCA	INFI_LOOP%
+0058 : 56;
+0059 : 00;
+[005A..00FF] : 00;
+End;
+
